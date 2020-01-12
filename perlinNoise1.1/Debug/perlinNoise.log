@@ -1,0 +1,7 @@
+﻿  Graph.cpp
+C:\Users\tobia\source\repos\perlinNoise1.1\Graph.cpp(54,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\tobia\source\repos\perlinNoise1.1\Graph.cpp(96,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\tobia\source\repos\perlinNoise1.1\Graph.cpp(109,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\tobia\source\repos\perlinNoise1.1\Graph.cpp(185,52): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\tobia\source\repos\perlinNoise1.1\Graph.cpp(186,59): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  perlinNoise.vcxproj -> C:\Users\tobia\source\repos\perlinNoise1.1\Debug\perlinNoise.exe
