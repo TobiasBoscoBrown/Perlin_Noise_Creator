@@ -1,10 +1,10 @@
-#pragma once
-#include <string>
 #include <iostream>
 #include <fstream>
+#include <cmath>
 #include <cstdlib>
 #include <ctime>
-
+#include <string>
+#include "stb_image_write.h"
 using namespace std;
 
 // Define the Graph class

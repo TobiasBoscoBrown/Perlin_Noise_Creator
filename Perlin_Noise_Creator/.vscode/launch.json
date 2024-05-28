@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(gdb) Launch",
+            "name": "g++.exe build and debug active file",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/Source.exe",
@@ -12,7 +12,7 @@
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerPath": "C:/msys64/ucrt64/bin/gdb.exe", // Ensure this is the correct path to gdb
+            "miDebuggerPath": "C:/msys64/ucrt64/bin/gdb.exe",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
@@ -20,11 +20,12 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "build",
+            "preLaunchTask": "C/C++: g++.exe build active file",
+            "internalConsoleOptions": "openOnSessionStart",
             "logging": {
+                "engineLogging": true,
                 "trace": true,
-                "traceResponse": true,
-                "engineLogging": true
+                "traceResponse": true
             }
         }
     ]

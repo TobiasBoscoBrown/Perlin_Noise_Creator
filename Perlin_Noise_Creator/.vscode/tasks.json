@@ -2,23 +2,23 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            "label": "C/C++: g++.exe build active file",
             "type": "shell",
-            "command": "g++",
+            "command": "C:\\msys64\\ucrt64\\bin\\g++.exe",
             "args": [
-                "-g", // Include debugging information
+                "-g",
                 "${workspaceFolder}/Graph.cpp",
                 "${workspaceFolder}/Source.cpp",
                 "-o",
-                "${workspaceFolder}/Source.exe" // Output executable
+                "${workspaceFolder}/Source.exe",
+                "-lz",
+                "-lws2_32"
             ],
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
-            "problemMatcher": [
-                "$gcc"
-            ],
+            "problemMatcher": ["$gcc"],
             "detail": "Generated task by Debugger."
         }
     ]
