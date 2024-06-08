@@ -5,14 +5,19 @@
 
 using namespace std;   // Use the standard namespace
 
-// Function to add a node to the graph at position (x, y)
 void Graph::addNode(int x, int y) {
-    nodePtr n = new node; // Create a new node
+    NodePtr n = new Node; // Create a new node
 
     n->right = NULL;     // Initialize right pointer to NULL
     n->down = NULL;      // Initialize down pointer to NULL
     n->xPos = x;         // Set the x position of the node
     n->yPos = y;         // Set the y position of the node
+    n->toPixel = new Pixel(); // Ensure toPixel is initialized
+
+    // Initialize the pixel values
+    n->toPixel->red = 10;
+    n->toPixel->green = 10;
+    n->toPixel->blue = 201;
 
     if (root != NULL) { // If the root is not NULL (graph is not empty)
         if (n->xPos == 0) { // If the node is at the beginning of a new line
@@ -26,11 +31,7 @@ void Graph::addNode(int x, int y) {
             tail->right = n;       // Link the node to the node on the left
             n->left = tail;        // Link the node on the left to this node
             if (n->yPos > 0 && n->yPos != height) { // If the node is within the height of the graph
-                pixelPtr p = new pixel; // Create a new pixel
-                currAboveNode->toPixel = p; // Link the pixel to the node above
-                p->red = 10;         // Set initial red value
-                p->green = 10;       // Set initial green value
-                p->blue = 201;       // Set initial blue value
+                currAboveNode->toPixel = n->toPixel; // Link the pixel to the node above
                 currAboveNode = currAboveNode->right; // Move to the next node above
                 n->up = currAboveNode; // Link the node above to this node
                 currAboveNode->down = n; // Link this node to the node above
@@ -314,6 +315,35 @@ void Graph::outputGraph(ofstream& img) {
         if (currX != width - 1 && currY != height - 1) {
             img << curr->toPixel->red << " " << curr->toPixel->green << " " << curr->toPixel->blue << endl;
         }
+    }
+}
+
+void Graph::exportImageData(vector<unsigned char>& imageData) {
+    int imgWidth = width - 1;
+    int imgHeight = height - 1;
+
+    NodePtr currentNode = root;
+    while (currentNode) {
+        NodePtr rowNode = currentNode;
+        while (rowNode) {
+            if (rowNode) {
+                if (rowNode->toPixel) {
+                    imageData.push_back(rowNode->toPixel->red);
+                    imageData.push_back(rowNode->toPixel->green);
+                    imageData.push_back(rowNode->toPixel->blue);
+                } else {
+                    std::cerr << "Error: toPixel is null at (" << rowNode->xPos << ", " << rowNode->yPos << ")" << std::endl;
+                    // Handle the error as needed, e.g., fill with a default color
+                    imageData.push_back(0); // red
+                    imageData.push_back(0); // green
+                    imageData.push_back(0); // blue
+                }
+                rowNode = rowNode->right;
+            } else {
+                std::cerr << "Error: rowNode is null" << std::endl;
+            }
+        }
+        currentNode = currentNode->down;
     }
 }
 

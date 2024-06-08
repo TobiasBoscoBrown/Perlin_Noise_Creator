@@ -1,10 +1,14 @@
+#include <iostream>   // For standard input and output streams (cout, endl)
+#include <sstream>    // For stringstream operations
+#include "Graph.h"    // Custom header file for the Graph class
+#include <cmath>      // For mathematical functions (sin, abs, pow)
 #include <fstream>    // For file operations (ofstream)
 #include <cstdlib>    // For general purpose functions (rand, srand, abs)
 #include <time.h>     // For time-related functions (time)
-#include <iostream>   // For standard input and output streams (cout, endl)
-#include "Graph.h"    // Custom header file for the Graph class
-#include <cmath>      // For mathematical functions (sin, abs, pow)
 using namespace std;  // Use the standard namespace
+
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "stb_image_write.h"  // Include the stb_image_write header file
 
 int main() {
     // Initialize the width and height of the graph (grid) to 1001 x 1001 nodes
@@ -20,31 +24,56 @@ int main() {
     pic.setHeight(height); // Set the height of the graph
     pic.setCut(numCuts);   // Set the number of cuts in the graph
 
-    // Open a file to write the image data in PPM format
-    ofstream img("picture.ppm");
-    img << "P3" << endl;                   // PPM file format identifier
-    img << width - 1 << " " << height - 1 << endl; // Image dimensions (width-1) x (height-1)
-    img << "255" << endl;                  // Maximum color value
-
     // Add nodes to the graph for each coordinate (x, y)
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             pic.addNode(x, y); // Add a node at coordinates (x, y)
         }
     }
-	pic.printCorners();
+
+    cout << "Nodes added." << endl;
 
     // Perform the specified number of cuts in the graph
     pic.cutGraph();
 
+    cout << "Graph cut." << endl;
+
     // Define distance vectors for the nodes in the graph
     pic.defineDistVect();
 
-    // Output the graph data to the PPM file
-    pic.outputGraph(img);
+    cout << "Distance vectors defined." << endl;
 
-    // Close the PPM file
-    img.close();
+    // Prepare the image data for PNG output
+    vector<unsigned char> imageData;
+    pic.exportImageData(imageData);
+
+    cout << "Image data exported." << endl;
+
+    // Get the current time for timestamp
+    time_t now = time(0);
+    tm *ltm = localtime(&now);
+
+    // Format the timestamp as YYYYMMDD_HHMMSS
+    stringstream ss;
+    ss << 1900 + ltm->tm_year;
+    ss << 1 + ltm->tm_mon;
+    ss << ltm->tm_mday << "_";
+    ss << ltm->tm_hour;
+    ss << ltm->tm_min;
+    ss << ltm->tm_sec;
+
+    // Create the filename with the timestamp and version number
+    string filename = "example/picture_v1_" + ss.str() + ".png";
+
+    // Ensure the example directory exists (create it if not)
+    system("mkdir -p example");
+
+    // Write the image data to a PNG file
+    int imgWidth = width - 1;
+    int imgHeight = height - 1;
+    stbi_write_png(filename.c_str(), imgWidth, imgHeight, 3, imageData.data(), imgWidth * 3);
+
+    cout << "Image saved to " << filename << endl;
 
     // Program finished successfully
     return 0;
