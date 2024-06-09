@@ -13,7 +13,7 @@ using namespace std;  // Use the standard namespace
 int main() {
     // Initialize the width and height of the graph (grid) to 1001 x 1001 nodes
     int width = 1001, height = 1001; // This results in (width-1) * (height-1) pixels
-    int numCuts = 100; // Number of cuts to be made in the graph
+    int numCuts = 5; // Number of cuts to be made in the graph
 
     // Seed the random number generator with the current time
     srand(time(0));
